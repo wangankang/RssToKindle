@@ -1,0 +1,12 @@
+/gradle
+/.idea
+.DS_Store
+gradlew
+gradlew.bat
+*.iml
+local.properties
+/build
+
+/app/*.iml
+/app/src/androidTest
+/app/build
