@@ -1,13 +1,16 @@
-package com.cornor.rss;
+package com.cornor.rss.adapter;
 
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.cornor.rss.interfaces.NavigationDrawerCallbacks;
+import com.cornor.rss.pojo.NavigationItem;
+import com.cornor.rss.R;
 
 import java.util.List;
 
@@ -17,7 +20,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     private List<NavigationItem> mData;
     private NavigationDrawerCallbacks mNavigationDrawerCallbacks;
     private int mSelectedPosition;
-    private int mTouchedPosition = -1;
+    private int mlastSelectedPost;
 
     public NavigationDrawerAdapter(List<NavigationItem> data) {
         mData = data;
@@ -35,32 +38,15 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     public NavigationDrawerAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.drawer_row, viewGroup, false);
         final ViewHolder viewHolder = new ViewHolder(v);
-        viewHolder.itemView.setOnTouchListener(new View.OnTouchListener() {
-                                                   @Override
-                                                   public boolean onTouch(View v, MotionEvent event) {
-
-                                                       switch (event.getAction()) {
-                                                           case MotionEvent.ACTION_DOWN:
-                                                               touchPosition(viewHolder.getPosition());
-                                                               return false;
-                                                           case MotionEvent.ACTION_CANCEL:
-                                                               touchPosition(-1);
-                                                               return false;
-                                                           case MotionEvent.ACTION_MOVE:
-                                                               return false;
-                                                           case MotionEvent.ACTION_UP:
-                                                               touchPosition(-1);
-                                                               return false;
-                                                       }
-                                                       return true;
-                                                   }
-                                               }
-        );
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                                                    @Override
                                                    public void onClick(View v) {
                                                        if (mNavigationDrawerCallbacks != null)
-                                                           mNavigationDrawerCallbacks.onNavigationDrawerItemSelected(viewHolder.getPosition());
+                                                           mlastSelectedPost = mSelectedPosition;
+                                                           mSelectedPosition = viewHolder.getAdapterPosition();
+                                                           notifyItemChanged(mlastSelectedPost);
+                                                           notifyItemChanged(mSelectedPosition);
+                                                           mNavigationDrawerCallbacks.onNavigationDrawerItemSelected(mSelectedPosition);
                                                    }
                                                }
         );
@@ -73,28 +59,19 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         viewHolder.textView.setText(mData.get(i).getText());
         viewHolder.textView.setCompoundDrawablesWithIntrinsicBounds(mData.get(i).getDrawable(), null, null, null);
 
-        //TODO: selected menu position, change layout accordingly
-        if (mSelectedPosition == i || mTouchedPosition == i) {
+        if (mSelectedPosition == i) {
             viewHolder.itemView.setBackgroundColor(viewHolder.itemView.getContext().getResources().getColor(R.color.selected_gray));
         } else {
             viewHolder.itemView.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
-    private void touchPosition(int position) {
-        int lastPosition = mTouchedPosition;
-        mTouchedPosition = position;
-        if (lastPosition >= 0)
-            notifyItemChanged(lastPosition);
-        if (position >= 0)
-            notifyItemChanged(position);
-    }
 
     public void selectPosition(int position) {
-        int lastPosition = mSelectedPosition;
+        mlastSelectedPost = mSelectedPosition;
         mSelectedPosition = position;
-        notifyItemChanged(lastPosition);
-        notifyItemChanged(position);
+        notifyItemChanged(mlastSelectedPost);
+        notifyItemChanged(mSelectedPosition);
     }
 
     @Override

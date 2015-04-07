@@ -1,19 +1,9 @@
-package com.cornor.rss;
+package com.cornor.rss.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
-import android.graphics.PixelFormat;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Shader;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,8 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.cornor.rss.interfaces.NavigationDrawerCallbacks;
+import com.cornor.rss.pojo.NavigationItem;
+import com.cornor.rss.R;
+import com.cornor.rss.adapter.NavigationDrawerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

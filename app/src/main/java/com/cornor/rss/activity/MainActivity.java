@@ -1,28 +1,35 @@
-package com.cornor.rss;
+package com.cornor.rss.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.cornor.rss.interfaces.NavigationDrawerCallbacks;
+import com.cornor.rss.fragment.NavigationDrawerFragment;
+import com.cornor.rss.R;
 
-public class MainActivity extends ActionBarActivity
+import roboguice.activity.RoboActionBarActivity;
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
+
+@ContentView(R.layout.activity_main)
+public class MainActivity extends RoboActionBarActivity
         implements NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
+
+    @InjectView(R.id.toolbar_actionbar)
     private Toolbar mToolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -35,7 +42,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
     }
 
 

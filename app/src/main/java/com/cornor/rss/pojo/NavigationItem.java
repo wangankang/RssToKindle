@@ -1,4 +1,4 @@
-package com.cornor.rss;
+package com.cornor.rss.pojo;
 
 
 import android.graphics.drawable.Drawable;

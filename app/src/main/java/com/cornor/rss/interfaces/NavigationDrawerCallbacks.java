@@ -1,4 +1,4 @@
-package com.cornor.rss;
+package com.cornor.rss.interfaces;
 
 public interface NavigationDrawerCallbacks {
     void onNavigationDrawerItemSelected(int position);
